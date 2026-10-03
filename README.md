@@ -9,7 +9,13 @@ It aims to minimize your effort on modifying existing xls/xlsx format test cases
 
 Download source code, sample templates, a quick tutorial and the application itself from "Files" as you wish. Just try it and see if it helps with your work!
 
-NOTE: This tool need the following prerequisitions: .Net Framework 3.5 (or upper), Excel 2007 (or upper).
+NOTE: This tool needs the following prerequisites: .NET 10 Desktop Runtime (or upper) and Microsoft Excel installed at runtime
+(the Excel sheet is read through COM interop with Excel).
+
+<!-- Future consideration: replace COM interop with a pure-managed reader such as NPOI
+     (https://npoi.github.io/) so the tool can run on machines without Excel installed
+     and in headless/CI scenarios. The parsing logic in ExcelReader.cs would be the only
+     component affected. -->
 
 ## Features
   *  Generate XML in TestLink's Test Cases format
