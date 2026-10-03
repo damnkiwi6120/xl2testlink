@@ -1,61 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+namespace EX_Converter;
 
-namespace EX_Converter
+internal sealed class TestCase : ITlElement
 {
-    internal class TestCase : ITlElement
+    //Should refer to TL.
+    private const int ExecutionTypeDefault = 1;
+    //Should refer to TL.
+    private const int ImportanceDefault = 2;
+
+    public string AttrInternalId { get; } = string.Empty;
+    //Implement ITlElement.
+    public string AttrName { get; }
+    //Implement ITlElement.
+    public string NodeOrder { get; } = string.Empty;
+    public string ExternalId { get; } = string.Empty;
+    public string Version { get; } = string.Empty;
+    public string? Summary { get; }
+    public string? Preconditions { get; }
+    public int ExecutionType { get; }
+    public int Importance { get; }
+    public List<TestStep> Steps { get; } = new();
+
+    public TestCase(string name, string? summary, string? preconditions, int importance)
     {
-        #region Fields.
-        public string AttrInternalId { get; private set; }
-        //Implement ITlElement.
-        public string AttrName { get; private set; }
-        //Implement ITlElement.
-        public string NodeOrder { get; private set; }
-        public string ExternalId { get; private set; }
-        public string Version { get; private set; }
-        public string Summary { get; private set; }
-        public string Preconditions { get; private set; }
-        public int ExecutionType { get; private set; }
-        public int Importance { get; private set; }
+        AttrName = name;
+        Summary = summary;
+        Preconditions = preconditions;
+        ExecutionType = ExecutionTypeDefault;
+        Importance = importance;
+    }
 
-        public List<TestStep> Steps { get; private set; }
+    public void AddTestStep(TestStep newStep)
+    {
+        Steps.Add(newStep);
+    }
 
-        //Should refer to TL.
-        private const int EXECUTION_TYPE_DEFAULT = 1;
-        //Should refer to TL.
-        private const int IMPORTANCE_DEFAULT = 2;
-        #endregion
-
-        public TestCase(string name, string summary, string preconditions, int importance)
-        {
-            this.AttrInternalId = String.Empty;
-            this.AttrName = name;
-
-            this.NodeOrder = String.Empty;
-            this.ExternalId = String.Empty;
-            this.Version = String.Empty;
-            this.Summary = summary;
-            this.Preconditions = preconditions;
-            this.ExecutionType = EXECUTION_TYPE_DEFAULT;
-            this.Importance = importance;
-
-            this.Steps = new List<TestStep>();
-        }
-
-        public void AddTestStep(TestStep newStep)
-        {
-            this.Steps.Add(newStep);
-        }
-
-        public bool NameEquals(ITlElement other)
-        {
-            if ((other is TestCase) && (this.AttrName == other.AttrName))
-                return true;
-            else
-                return false;
-        }
-
+    public bool NameEquals(ITlElement other)
+    {
+        return other is TestCase && AttrName == other.AttrName;
     }
 }

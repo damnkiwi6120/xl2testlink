@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+namespace EX_Converter;
 
-namespace EX_Converter
+internal interface ITlElement
 {
-    internal interface ITlElement
-    {
-        string AttrName { get; }
-        string NodeOrder { get; }
+    string AttrName { get; }
+    string? NodeOrder { get; }
 
-        bool NameEquals(ITlElement other);
-    }
+    bool NameEquals(ITlElement other);
 }

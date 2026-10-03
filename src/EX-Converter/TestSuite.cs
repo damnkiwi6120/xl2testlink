@@ -1,53 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+namespace EX_Converter;
 
-namespace EX_Converter
+internal sealed class TestSuite : ITlElement
 {
-    internal class TestSuite : ITlElement
+    //Implement ITlElement.
+    public string AttrName { get; }
+    //Implement ITlElement.
+    public string? NodeOrder { get; }
+    public string? Details { get; }
+    public List<ITlElement> ChildrenElements { get; } = new();
+
+    public TestSuite(string suiteName, string? details)
     {
-        #region Fields.
-        //Implement ITlElement.
-        public string AttrName { get; private set; }
-        //Implement ITlElement.
-        public string NodeOrder { get; private set; }
-        public string Details { get; private set; }
-        public List<ITlElement> ChildrenElements { get; private set; }
-        #endregion
+        AttrName = suiteName;
+        Details = details;
+    }
 
-        public TestSuite(string suiteName, string details)
-        {
-            this.AttrName = suiteName;
-            this.Details = details;
-            this.ChildrenElements = new List<ITlElement>();
-        }
+    public void AddChild(ITlElement tlElement)
+    {
+        ChildrenElements.Add(tlElement);
+    }
 
-        public void AddChild(ITlElement tlElement)
-        {
-            this.ChildrenElements.Add(tlElement);
-        }
+    public bool NameEquals(ITlElement other)
+    {
+        return other is TestSuite && AttrName == other.AttrName;
+    }
 
-        public bool NameEquals(ITlElement other)
+    public TestSuite? FindSuite(string suiteName)
+    {
+        foreach (ITlElement elem in ChildrenElements)
         {
-            if ((other is TestSuite) && (this.AttrName == other.AttrName))
-                return true;
-            else
-                return false;
-        }
-
-        public TestSuite FindSuite(string suiteName)
-        {
-            foreach (ITlElement elem in this.ChildrenElements)
+            if (elem is TestSuite suite && suite.AttrName == suiteName)
             {
-                if ((elem is TestSuite) && ((elem as TestSuite).AttrName == suiteName))
-                {
-                    return elem as TestSuite;
-                }
+                return suite;
             }
-            return null;
         }
-
-
+        return null;
     }
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+namespace EX_Converter;
 
-namespace EX_Converter
+public enum LogType
 {
-    public enum LogType
-    {
-        Normal,
-        Warning,
-        Error
-    }
+    Normal,
+    Warning,
+    Error
 }
